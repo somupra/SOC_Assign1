@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>My first Subwindow</title>
+      <script>
+        function go(myframe, optionlist, dimension){
+            var e = document.getElementById("optionlist");
+            var x = e.options[e.selectedIndex].value;
+            var px = document.getElementById("dimension").value;
+            document.getElementById('myframe').src = x;
+            document.getElementById('myframe').height = px+"px";
+        }
+      </script>
+   </head>
+   <body>
+   <iframe id = "myframe" src = "" width = "100%" height = "600px" style="overflow: auto"></iframe>
+   <select id = "optionlist" name="Websites">
+    <option value="http://www.wikipedia.org">Wikipedia</option>
+    <option value="http://bing.com">Bing</option>
+    <option value="http://tutorialspoint.com">Tutorialspoint</option>
+  </select>
+  <label>enter the size :</label><input type="text" id="dimension" value="600"></input>
+
+  <button onclick = "go('myframe', 'optionlist', 'dimension')">GO !</button>
+      
+   </body>
+</html>
