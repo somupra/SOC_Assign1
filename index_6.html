@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My First subwindow</title>
+        <style>
+            #myframe{
+                /* margin: auto;
+                height: 50%;
+                width: 60%; */
+                border: 2px solid black;
+                box-align: "middle"; 
+            }
+            #corner{
+                width: 20px;
+                height: 20px;
+                background-color: red;
+                /* float: left; */
+
+            }
+            html, body
+            {
+                height: 100%;
+            }
+        </style>
+        <script>
+        function setcorner()
+        {    var corner = document.getElementById("corner");
+            var frame = document.getElementById("myframe");
+            var width = frame.getAttribute("width");
+            var winpx = width.slice(0, width.length - 1);
+            console.log("corner set");
+            winpx = (parseFloat(winpx)/100)*parseFloat(screen.width);
+            corner.style.marginLeft=""+winpx+"px";
+        }
+        function resize(){
+            console.log("called");
+            var width = document.getElementById("width").value;
+            var height = document.getElementById("height").value;
+            var inner = document.getElementById("myframe");
+            
+            inner.setAttribute("width", width);
+            inner.setAttribute("height", height);
+        }
+        var initialX;
+        var initialY;
+        var drag = 0;
+        function startdrag(e){
+            e = e || window.event;
+            drag = 1;
+            initialX = e.pageX;
+            initilaY = e.pageY;
+            console.log("drag started");
+        }
+        function stopdrag(e){
+            e = e || window.event;
+            drag = 0;
+            console.log("drag stopped");
+        }
+        document.addEventListener("dragover", function(e){
+            e = e||window.event;
+            var cX = e.pageX, cY = e.pageY;
+            var frame = document.getElementById("myframe");
+            if(drag){
+                frame.setAttribute("width", cX);
+                frame.setAttribute("height", cY);
+            }
+            document.getElementById("corner").style.marginLeft = cX +"px";
+        });
+        </script>
+    </head>
+    <body>
+    <iframe id="myframe" src="form.html" width="60%" height="40%" sandbox="allow-scripts allow-forms allow-same-origin" onload="setcorner()"></iframe>
+    <div id="corner" onmousedown="startdrag()" onmouseup="stopdrag()"></div>
+    <br>
+    Enter width and height in pixels to resize the inner-window<br>
+    width: <input type="text" id="width"><br>
+    height:<input type="text" id="height">
+    <br>
+    <input type="button" value="Resize inner-window" onclick="resize()">
+    </body>
+</html>
