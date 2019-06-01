@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            div{
+                overflow: none;
+                width: 400px;
+                height: 300px;
+            }    
+        </style>
+    </head>
+    <body>
+        <div id="container" style="color: red; border: 10px solid black">
+            <iframe src = "http://www.wikipedia.org" id="frame" style="overflow: auto" width="100%" height="100%"></iframe>
+        </div>
+        <script>
+                var frame = document.getElementById("container");
+                var startX, startY, startHeight, startWidth;
+                frame.addEventListener('mousedown',initialisedrag,false);
+                function initialisedrag(e){
+                    console.log("Initialised");
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    console.log(startX, startY);
+                    startWidth = frame.clientWidth;
+                    startHeight = frame.clientHeight;
+                    console.log(startHeight, startWidth);
+                    document.addEventListener('mousemove', doDrag, false);
+                    document.addEventListener('mouseup', stopDrag, false);
+                }
+                function doDrag(e){
+                    console.log("dragging started");
+                    frame.style.width = (startWidth + e.clientX - startX)+"px";
+                    frame.style.height = (startHeight + e.clientY - startY)+"px";
+                }
+                function stopDrag(e){
+                    
+                    document.removeEventListener('mousemove', doDrag, false);
+                    document.removeEventListener('mouseup', stopDrag, false);
+                    console.log("stopped");
+                }
+            </script>
+    </body>
+</html>
